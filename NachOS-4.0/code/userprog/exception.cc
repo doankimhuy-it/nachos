@@ -69,6 +69,8 @@ void ExceptionHandler(ExceptionType which)
 
 	switch (which)
 	{
+	case NoException:
+		return;
 	case SyscallException:
 		switch (type)
 		{
@@ -238,6 +240,7 @@ void ExceptionHandler(ExceptionType which)
 
 	default:
 		cerr << "Unexpected user mode exception" << (int)which << "\n";
+		SysHalt();
 		break;
 	}
 	ASSERTNOTREACHED();
