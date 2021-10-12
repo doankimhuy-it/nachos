@@ -27,17 +27,28 @@ void SysHalt() { kernel->interrupt->Halt(); }
 int SysAdd(int op1, int op2) { return op1 + op2; }
 
 int SysReadNum() {
-  int res = 0;
+  int res = 0, i, j;
   char ch;
-  while (true) {
+  char str[255];
+  for (i = 0; i < 255; i++) {
     ch = kernel->synchConsoleIn->GetChar();
+    if (ch == '\n')
+      break;
+    else
+      str[i] = ch;
+  }
+  for (j = 0; j < i; j++) {
+    ch = str[j];
     if (ch == '\n')
       return res;
     if (ch < '0' || ch > '9') {
       return 0;
     }
     if (!WillOverflow(res, ch - '0'))
-      res = res * 10 + (ch - '0');
+      if (res >= 0)
+        res = res * 10 + (ch - '0');
+      else
+        res = res * 10 - (ch - '0');
     else
       return 0;
   }
@@ -46,7 +57,7 @@ int SysReadNum() {
 
 bool WillOverflow(int cur, int next) {
   // Perform your overflow check
-  return (((INT_MAX - next) / 10) < cur);
+  return (((INT_MAX - next) / 10) < cur || (INT_MIN + next) / 10 > cur);
 }
 
 void SysPrintNum(int number) {
