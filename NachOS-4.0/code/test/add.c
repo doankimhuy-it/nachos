@@ -13,7 +13,7 @@ int main()
   // result = Add(42, 23);
 
   //PrintNum(100);
-  result = ReadNum();
+  result = RandomNum();
   PrintNum(result);
   //result = ReadChar();
 

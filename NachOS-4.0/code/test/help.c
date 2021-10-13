@@ -9,6 +9,7 @@
 
 int main()
 {
+  char* teamIntro = "------Gioi thieu nhom------\n";
   char* school = "DH KHTN - DHQG TP.HCM\n";
   char* class = "19CNTN\n";
   char* team = "Doan Kim Huy - 19120239\n"
@@ -20,12 +21,14 @@ int main()
   char* sortIntroduction = "Chuong trinh Sort cho phep sap xep mot mang so nguyen co so phan tu nho hon 100.\n";
   char* sortUsage = "Cach su dung:\n"
                     "1. Nhap so phan tu cua mang nho hon 100.\n"
-                    "2. Chon sap xep tang dan hoac giam dan.\n"
-                    "3. Sap xep mang bang thuat toan Bubble Sort.\n";
+                    "2. Nhap cac phan tu cua mang.\n"
+                    "3. Chon sap xep tang dan hoac giam dan.\n"
+                    "4. Sap xep mang bang thuat toan Bubble Sort.\n";
 
   char* asciiIntroduction = "Chuong trinh Ascii in ra danh sach cac ky tu thuoc bang ma ascii.\n";
        
   // Gioi thieu nhom
+  PrintString(teamIntro);
   PrintString(school);
   PrintString(class);
   PrintString(team);
