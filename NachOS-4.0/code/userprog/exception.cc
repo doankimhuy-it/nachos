@@ -64,6 +64,7 @@ void ExceptionHandler(ExceptionType which)
 {
 	int type = kernel->machine->ReadRegister(2);
 	int result;
+	char charResult;
 
 	DEBUG(dbgSys, "Received Exception " << which << " type: " << type << "\n");
 
@@ -127,7 +128,7 @@ void ExceptionHandler(ExceptionType which)
 
 			/* Process SysPrintNum Systemcall */
 
-			SysPrintNum(kernel->machine->ReadRegister(4));
+			SysPrintNum((int)kernel->machine->ReadRegister(4));
 
 			DEBUG(dbgSys, "Print completed\n");
 
@@ -144,11 +145,11 @@ void ExceptionHandler(ExceptionType which)
 
 			/* Process SysReadChar Systemcall */
 
-			result = SysReadChar() - '0';
+			charResult = SysReadChar();
 
-			DEBUG(dbgSys, "Read returning with " << result << "\n");
+			DEBUG(dbgSys, "Read returning with " << charResult << "\n");
 
-			kernel->machine->WriteRegister(2, (int)result);
+			kernel->machine->WriteRegister(2, (int)charResult);
 
 			/* Modify return point */
 			IncPCReg();
@@ -162,7 +163,7 @@ void ExceptionHandler(ExceptionType which)
 			DEBUG(dbgSys, "Print " << kernel->machine->ReadRegister(4) << " to console output\n");
 			/* Process SysPrintChar Systemcall */
 
-			SysPrintChar(kernel->machine->ReadRegister(4));
+			SysPrintChar((char)kernel->machine->ReadRegister(4));
 
 			DEBUG(dbgSys, "Print completed\n");
 
@@ -222,7 +223,7 @@ void ExceptionHandler(ExceptionType which)
 			ASSERTNOTREACHED();
 			break;
 
-		case SC_Exit:
+		/*case SC_Exit:
 			DEBUG(dbgSys, "Exit\n");
 
 			IncPCReg();
@@ -230,7 +231,7 @@ void ExceptionHandler(ExceptionType which)
 			return;
 
 			ASSERTNOTREACHED();
-			break;
+			break;*/
 
 		default:
 			cerr << "Unexpected system call " << type << "\n";

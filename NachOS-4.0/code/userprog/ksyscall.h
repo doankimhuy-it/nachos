@@ -27,32 +27,34 @@ void SysHalt() { kernel->interrupt->Halt(); }
 int SysAdd(int op1, int op2) { return op1 + op2; }
 
 int SysReadNum() {
-  int res = 0, i, j;
+  int res = 0, sign = 1;
   char ch;
-  char str[255];
-  for (i = 0; i < 255; i++) {
-    ch = kernel->synchConsoleIn->GetChar();
-    if (ch == '\n')
-      break;
-    else
-      str[i] = ch;
+  ch = kernel->synchConsoleIn->GetChar();
+  if (ch == '-') {
+    sign = -1;
   }
-  for (j = 0; j < i; j++) {
-    ch = str[j];
-    if (ch == '\n')
-      return res;
+  else if (ch < '0' || ch > '9'){
+    return 0;
+  }
+  else {
+    res = ch - '0';
+  }
+
+  while (true){
+    ch = kernel->synchConsoleIn->GetChar();
+    if (ch =='\n'){
+      return res * sign;
+    }
     if (ch < '0' || ch > '9') {
       return 0;
     }
-    if (!WillOverflow(res, ch - '0'))
-      if (res >= 0)
-        res = res * 10 + (ch - '0');
-      else
-        res = res * 10 - (ch - '0');
-    else
+    if (!WillOverflow(res, ch - '0')){
+      res = res * 10 + (ch - '0');
+    }
+    else{
       return 0;
+    }
   }
-  return res;
 }
 
 bool WillOverflow(int cur, int next) {
@@ -70,7 +72,9 @@ void SysPrintNum(int number) {
   }
 }
 
-char SysReadChar() { return kernel->synchConsoleIn->GetChar(); }
+char SysReadChar() {
+  return kernel->synchConsoleIn->GetChar();
+}
 
 void SysPrintChar(char character) {
   kernel->synchConsoleOut->PutChar(character);
