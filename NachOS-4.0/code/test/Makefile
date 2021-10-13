@@ -132,18 +132,6 @@ add: add.o start.o
 	$(LD) $(LDFLAGS) start.o add.o -o add.coff
 	$(COFF2NOFF) add.coff add
 
-help.o: help.c
-	$(CC) $(CFLAGS) -c readnum.c
-help: help.o start.o
-	$(LD) $(LDFLAGS) start.o help.o -o help.coff
-	$(COFF2NOFF) help.coff help
-
-help.o: help.c
-	$(CC) $(CFLAGS) -c help.c
-help: help.o start.o
-	$(LD) $(LDFLAGS) start.o help.o -o help.coff
-	$(COFF2NOFF) help.coff help
-
 shell.o: shell.c
 	$(CC) $(CFLAGS) -c shell.c
 shell: shell.o start.o
