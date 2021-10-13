@@ -33,7 +33,7 @@ int main()
     char *ending = ": ";
     char *sortChoice = "Vui long chon sap xep tang dan hay giam dan (0: tang dan, 1: giam dan): ";
     char *newline = "\n";
-    char *tab = "\b";
+    char *tab = "\t";
     int choice;
     do
     {
@@ -89,7 +89,7 @@ int main()
     }
 
     Halt();
-    /*#ifdef UNIX_DEBUG
+#ifdef UNIX_DEBUG
     for (i = 0; i < SIZE; i++)
     {
         printf("%4d ", A[i]);
@@ -106,7 +106,7 @@ int main()
     printf("\n");
 #endif /* UNIX_DEBUG */
 
-    /* for (i = 0; i < SIZE; i++)
+    for (i = 0; i < SIZE; i++)
     {
         if (A[i] != i)
         {
@@ -114,5 +114,5 @@ int main()
         }
     }
 
-    Exit(0);*/
+    Exit(0);
 }
