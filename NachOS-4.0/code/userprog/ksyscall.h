@@ -44,7 +44,7 @@ int SysReadNum() {
 
     while (true) {
         ch = kernel->synchConsoleIn->GetChar();  /// doc toan bo chuoi con lai
-        if (ch == '\n') {  // neu la enter, luu gia tri duoc nhap
+        if (ch == '\n') {                        // neu la enter, luu gia tri duoc nhap
             return res * sign;
         }
         if (ch < '0' || ch > '9') {
@@ -93,21 +93,20 @@ int SysRandomNum() {
 
 // Cai dat cua ham ReadString, duoc goi trong exception.cc
 void SysReadString(int virtAddress, int length) {
-    char *buffer;  // buffer la vung nho thuoc user-space
-    buffer =
-        User2System(virtAddress, length);  // chuyen vung nho tu user-space vao
-                                           // kernel-space de ghi du lieu
+    char *buffer;
+    buffer = User2System(virtAddress, length);
     for (int i = 0; i < length; i++) {
-        buffer[i] =
-            kernel->synchConsoleIn->GetChar();  // doc tung ky tu vao buffer
-        if (buffer[i] == '\n') {  // ngat neu ket thuc chuoi bang enter
+        buffer[i] = kernel->synchConsoleIn->GetChar();
+        if (buffer[i] == '\n') {
+            for (int j = i + 1; j < length; j++) {
+                buffer[j] = '\0';
+            }
             break;
         }
-    }
-    System2User(virtAddress, length,
-                buffer);  // chuyen vung nho ve lai user-space
+        System2User(virtAddress, length, buffer);  // chuyen vung nho ve lai user-space
 
-    delete buffer;
+        delete buffer;
+    }
 }
 
 // Ham copy buffer tu user-space vao kernel-space
