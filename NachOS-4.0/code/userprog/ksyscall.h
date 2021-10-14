@@ -110,10 +110,10 @@ void SysReadString(int virtAddress, int length) {
             buffer[i] = '\0';
             break;
         }
-        System2User(virtAddress, length, buffer);  // chuyen vung nho ve lai user-space
-
-        delete buffer;
     }
+    System2User(virtAddress, length, buffer);  // chuyen vung nho ve lai user-space
+
+    delete buffer;
 }
 
 // Ham copy buffer tu user-space vao kernel-space
