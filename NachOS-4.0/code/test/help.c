@@ -34,11 +34,6 @@ int main() {
     PrintString(class);
     PrintString(team);
 
-    // Gioi thieu nhom
-    PrintString(school);
-    PrintString(class);
-    PrintString(team);
-
     PrintString(slash);
 
     // Gioi thieu chuong trinh Sort
