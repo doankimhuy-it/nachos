@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <ctype.h>
 
 #include "kernel.h"
 #include "synchconsole.h"
@@ -95,19 +96,23 @@ int SysRandomNum() {
 
 // Cai dat cua ham ReadString, duoc goi trong exception.cc
 void SysReadString(int virtAddress, int length) {
-    char *buffer;
-    int i = 0;
-    buffer = User2System(virtAddress, length);
-    for (i = 0; i < length; i++) {
-        buffer[i] = kernel->synchConsoleIn->GetChar();
-        if (buffer[i] == '\n') {
-            buffer[i] = '\0';
-            break;
+    char* buffer = NULL;
+    if (length > 0){
+        buffer = new char[length+1];
+        if(buffer){
+            memset(buffer, 0, length+1);
+            for(int i=0;i<length;++i){
+                buffer[i] = SysReadChar();
+                if(buffer[i]=='\n'){
+                    buffer[i]='\0';
+                    break;
+                }
+            }
+            System2User(virtAddress, length, buffer);
+            delete buffer;
+            return;
         }
     }
-    System2User(virtAddress, length, buffer);  // chuyen vung nho ve lai user-space
-
-    delete buffer;
 }
 
 // Ham copy buffer tu user-space vao kernel-space

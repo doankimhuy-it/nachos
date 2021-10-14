@@ -251,7 +251,7 @@ void ExceptionHandler(ExceptionType which) {
             break;
 
         default:  // Cac exception khac (ngat he thong)
-            cerr << "Unexpected user mode exception" << (int)which << "\n";
+            cerr << "Unexpected user mode exception " << (int)which << "\n";
             SysHalt();
             break;
     }
