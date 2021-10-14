@@ -1,4 +1,4 @@
-/* sort.c 
+/* sort.c
  *    Test program to sort a large number of integers.
  *
  *    Intention is to stress virtual memory system.
@@ -21,56 +21,51 @@
 
 //#define SIZE (1024)
 
-//int A[SIZE];	/* size of physical memory; with code, we'll run out of space!*/
+// int A[SIZE];	/* size of physical memory; with code, we'll run out of space!*/
 
-int main()
-{
+int main() {
     int SIZE;
     int i, j, tmp;
     int A[100];
     char *enterSIZE = "Nhap so luong phan tu <= 100: ";
     char *enterEle = "Nhap so thu ";
     char *ending = ": ";
-    char *sortChoice = "Vui long chon sap xep tang dan hay giam dan (0: tang dan, 1: giam dan): ";
+    char *sortChoice =
+        "Vui long chon sap xep tang dan hay giam dan (0: tang dan, 1: giam "
+        "dan): ";
     char *newline = "\n";
     char *tab = "\t";
     int choice;
-    do
+    do  // nhap vao do lon mang, nhap lai neu khong thoa 0 < SIZE <= 100
     {
         PrintString(enterSIZE);
         SIZE = ReadNum();
     } while (SIZE <= 0 || SIZE > 100);
 
-    /* read array */
-    for (i = 0; i < SIZE; i++)
-    {
+    /* doc mang */
+    for (i = 0; i < SIZE; i++) {
         PrintString(enterEle);
         PrintNum(i + 1);
         PrintString(ending);
         A[i] = ReadNum();
     }
 
-    while(true){
+    while (1) {
         PrintString(sortChoice);
         choice = ReadNum();
 
-        if (choice < 0 || choice > 1){
+        if (choice < 0 || choice > 1) {
             PrintString(newline);
             continue;
-        }
-        else {
+        } else {
             break;
         }
     }
 
-    if (choice == 0)
-        /* then sort! */
-        for (i = 0; i < (SIZE - 1); i++)
-        {
-            for (j = 0; j < (SIZE - i - 1); j++)
-            {
-                if (A[j] > A[j + 1])
-                { /* out of order -> need to swap ! */
+    if (choice == 0) /* then sort! */
+        for (i = 0; i < (SIZE - 1); i++) {
+            for (j = 0; j < (SIZE - i - 1); j++) {
+                if (A[j] > A[j + 1]) { /* out of order -> need to swap ! */
                     tmp = A[j];
                     A[j] = A[j + 1];
                     A[j + 1] = tmp;
@@ -79,21 +74,17 @@ int main()
         }
     else if (choice == 1)
         /* then sort! */
-        for (i = 0; i < SIZE; i++)
-        {
-            for (j = 0; j < (SIZE - i - 1); j++)
-            {
-                if (A[j] < A[j + 1])
-                { /* out of order -> need to swap ! */
+        for (i = 0; i < SIZE; i++) {
+            for (j = 0; j < (SIZE - i - 1); j++) {
+                if (A[j] < A[j + 1]) { /* out of order -> need to swap ! */
                     tmp = A[j];
                     A[j] = A[j + 1];
                     A[j + 1] = tmp;
                 }
             }
         }
-
-    for (i = 0; i < SIZE; i++)
-    {
+    // in mang
+    for (i = 0; i < SIZE; i++) {
         PrintNum(A[i]);
         PrintString(tab);
     }
@@ -101,15 +92,12 @@ int main()
 
     Halt();
 #ifdef UNIX_DEBUG
-    for (i = 0; i < SIZE; i++)
-    {
+    for (i = 0; i < SIZE; i++) {
         printf("%4d ", A[i]);
-        if (((i + 1) % 15) == 0)
-        {
+        if (((i + 1) % 15) == 0) {
             printf("\n");
         }
-        if (A[i] != i)
-        {
+        if (A[i] != i) {
             fprintf(stderr, "Out of order A[%d] = %d\n", i, A[i]);
             Exit(1);
         }
@@ -117,10 +105,8 @@ int main()
     printf("\n");
 #endif /* UNIX_DEBUG */
 
-    for (i = 0; i < SIZE; i++)
-    {
-        if (A[i] != i)
-        {
+    for (i = 0; i < SIZE; i++) {
+        if (A[i] != i) {
             Exit(1);
         }
     }
