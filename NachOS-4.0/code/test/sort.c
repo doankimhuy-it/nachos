@@ -49,10 +49,18 @@ int main() {
         PrintString(ending);
         A[i] = ReadNum();
     }
-    // doc tuy chon sap xep
-    PrintString(sortChoice);
-    choice = ReadNum();
-    PrintString(newline);
+
+    while (1) {
+        PrintString(sortChoice);
+        choice = ReadNum();
+
+        if (choice < 0 || choice > 1) {
+            PrintString(newline);
+            continue;
+        } else {
+            break;
+        }
+    }
 
     if (choice == 0) /* then sort! */
         for (i = 0; i < (SIZE - 1); i++) {
@@ -80,6 +88,7 @@ int main() {
         PrintNum(A[i]);
         PrintString(tab);
     }
+    PrintString(newline);
 
     Halt();
 #ifdef UNIX_DEBUG
