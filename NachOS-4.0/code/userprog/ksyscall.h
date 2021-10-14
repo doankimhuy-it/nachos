@@ -97,13 +97,7 @@ int SysRandomNum() {
 void SysReadString(int virtAddress, int length) {
     char *buffer;
     int i = 0;
-    int onechar = 0;
     buffer = User2System(virtAddress, length);
-    do {
-        onechar = (int)buffer[i];
-        printf("%d\n", onechar);
-        i++;
-    } while (i < length && onechar != 0);
     for (i = 0; i < length; i++) {
         buffer[i] = kernel->synchConsoleIn->GetChar();
         if (buffer[i] == '\n') {
