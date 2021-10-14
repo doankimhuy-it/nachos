@@ -33,6 +33,9 @@ int SysReadNum() {
   if (ch == '-') {
     sign = -1;
   }
+  else if (ch == '+') {
+    sign = 1;
+  }
   else if (ch < '0' || ch > '9'){
     return 0;
   }
@@ -87,14 +90,22 @@ int SysRandomNum() {
 
 void SysReadString(int virtAddress, int length) {
   char *buffer;
+  int i = 0;
+  int onechar = 0;
   buffer = User2System(virtAddress, length);
-  for (int i = 0; i < length; i++) {
+  do{
+    onechar = (int)buffer[i];
+    printf("%d\n", onechar);
+    i++;
+  } while(i<length && onechar != 0);
+  for (i = 0; i < length; i++) {
     buffer[i] = kernel->synchConsoleIn->GetChar();
     if (buffer[i] == '\n') {
+      buffer[i] = '\0';
       break;
     }
   }
-  System2User(virtAddress, length, buffer);
+  printf("\n%d\n", System2User(virtAddress, length, buffer));
 
   delete buffer;
 }
@@ -120,10 +131,10 @@ char *User2System(int virtAddr, int limit) {
 
 void SysPrintString(int virtAdrr) {
   char *buffer;
-  buffer = User2System(virtAdrr, 255);
+  buffer = User2System(virtAdrr, 1000);
   int i = 0;
   while (buffer[i] != '\0') {
-    kernel->synchConsoleOut->PutChar(buffer[i]);
+    kernel->synchConsoleOut->PutChar((char)buffer[i]);
     i++;
   }
   delete buffer;
