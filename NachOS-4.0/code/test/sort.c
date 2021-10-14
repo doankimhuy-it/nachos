@@ -1,4 +1,4 @@
-/* sort.c 
+/* sort.c
  *    Test program to sort a large number of integers.
  *
  *    Intention is to stress virtual memory system.
@@ -21,7 +21,7 @@
 
 //#define SIZE (1024)
 
-//int A[SIZE];	/* size of physical memory; with code, we'll run out of space!*/
+// int A[SIZE];	/* size of physical memory; with code, we'll run out of space!*/
 
 int main() {
     int SIZE;
@@ -30,16 +30,19 @@ int main() {
     char *enterSIZE = "Nhap so luong phan tu <= 100: ";
     char *enterEle = "Nhap so thu ";
     char *ending = ": ";
-    char *sortChoice = "Vui long chon sap xep tang dan hay giam dan (0: tang dan, 1: giam dan): ";
+    char *sortChoice =
+        "Vui long chon sap xep tang dan hay giam dan (0: tang dan, 1: giam "
+        "dan): ";
     char *newline = "\n";
     char *tab = "\t";
     int choice;
-    do {
+    do  // nhap vao do lon mang, nhap lai neu khong thoa 0 < SIZE <= 100
+    {
         PrintString(enterSIZE);
         SIZE = ReadNum();
     } while (SIZE <= 0 || SIZE > 100);
 
-    /* read array */
+    /* doc mang */
     for (i = 0; i < SIZE; i++) {
         PrintString(enterEle);
         PrintNum(i + 1);
@@ -81,7 +84,7 @@ int main() {
                 }
             }
         }
-
+    // in mang
     for (i = 0; i < SIZE; i++) {
         PrintNum(A[i]);
         PrintString(tab);
